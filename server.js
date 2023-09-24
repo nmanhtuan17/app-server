@@ -1,23 +1,21 @@
 const express = require('express')
 const app = express()
-const mongoose = require('mongoose')
+const cors = require('cors')
 const initRoute = require('./src/routes/routes.js')
+const connect = require('./src/config/db/index.js')
 require('dotenv').config()
 
 
 
 const port = process.env.PORT || 8080
-const URL = process.env.MONGO_URL
 
-mongoose.connect(URL)
-    .then(()=> console.log('connect db'))
-    .catch((err)=> console.log(err))
 
+app.use(cors())
 app.use(express.json())
 app.use(express.urlencoded({
     extended: true
 }))
-
+connect()
 initRoute(app)
 
 
