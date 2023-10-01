@@ -13,17 +13,17 @@ module.exports = {
             password: CryptoJS.AES.encrypt(req.body.password, process.env.SECRET).toString(),
         })
         try {
-             await newUser.save()
-             res.status(201).json({message: "User successfully created"})
+            await newUser.save()
+            res.status(201).json({ message: "User successfully created" })
         } catch (error) {
-            res.status(500).json({message: error})
-            
+            res.status(500).json({ message: error })
+
         }
     },
     loginUser: async (req, res) => {
         try {
-            const user = await User.findOne({email: req.body.email})
-            if(!user){
+            const user = await User.findOne({ email: req.body.email })
+            if (!user) {
                 res.status(401).json("Wrong credentials provide a valid email")
             }
 
@@ -38,13 +38,13 @@ module.exports = {
                 {
                     id: user.id
                 },
-                process.env.JWT_SECRET, {expiresIn: "7d"}
+                process.env.JWT_SECRET, { expiresIn: "7d" }
             )
 
-            const {password, __v, ...userData} = user._doc
-            res.status(200).json({...userData, token: userToken})
+            const { password, __v, ...userData } = user._doc
+            res.status(200).json({ ...userData, token: userToken })
         } catch (error) {
-            res.status(500).json({message: error})
+            res.status(500).json({ message: error })
         }
     }
 }
