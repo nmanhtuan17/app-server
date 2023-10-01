@@ -21,25 +21,30 @@ module.exports = {
         }
     },
     loginUser: async (req, res) => {
-        // try {
-        //     const user = await User.findOne({email: req.body})
-        //     !user && res.status(401).json("Wrong credentials provide a valid email")
+        try {
+            const user = await User.findOne({email: req.body.email})
+            if(!user){
+                res.status(401).json("Wrong credentials provide a valid email")
+            }
 
-        //     const decryptedPassword = CryptoJS.AES.decrypt(user.password, process.env.SECRET)
+            const decryptedPassword = CryptoJS.AES.decrypt(user.password, process.env.SECRET)
 
-        //     const decryptedPass = decryptedPassword.toString(CryptoJS.enc.Utf8)
+            const decryptedPass = decryptedPassword.toString(CryptoJS.enc.Utf8)
 
-        //     if (decryptedPass !== req.body.password) {
-        //         res.status(401).json("Wrong password")
-        //     }
-        //     const userToken = jwt.sign(
-        //         {
-        //             id: user.id
-        //         },
-        //         process.env.JWT_SECRET, {expiresIn: "7d"}
-        //     )
-        // } catch (error) {
-            
-        // }
+            if (decryptedPass !== req.body.password) {
+                res.status(401).json("Wrong password")
+            }
+            const userToken = jwt.sign(
+                {
+                    id: user.id
+                },
+                process.env.JWT_SECRET, {expiresIn: "7d"}
+            )
+
+            const {password, __v, ...userData} = user._doc
+            res.status(200).json({...userData, token: userToken})
+        } catch (error) {
+            res.status(500).json({message: error})
+        }
     }
 }
