@@ -24,7 +24,7 @@ module.exports = {
           products: [{ cartItem, qty: qty }],
         });
         await newCart.save();
-        res.status(200).json("product added to cart");
+        res.status(200).json({msg: 'add to cart success'});
       }
     } catch (error) {
       res.status(500).json(error);
