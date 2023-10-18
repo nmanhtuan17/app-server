@@ -24,7 +24,7 @@ module.exports = {
           products: [{ cartItem, qty: qty }],
         });
         await newCart.save();
-        res.status(200).json("product added to cart");
+        res.status(200).json({msg: 'add to cart success'});
       }
     } catch (error) {
       res.status(500).json(error);
@@ -34,7 +34,7 @@ module.exports = {
   getCart: async (req, res) => {
     const userId = req.params.id
     try {
-      const cart = await Cart.find({userId})
+      const cart = await Cart.findOne({userId})
         .populate('products.cartItem', '_id title supplier price imageUrl')
       res.status(200).json(cart)
     } catch (error) {

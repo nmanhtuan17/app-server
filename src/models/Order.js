@@ -6,20 +6,15 @@ const Order = new mongoose.Schema({
         ref: "Product"
     },
     userId: { type: String, require: true },
-    customerId: { type: String, require: true },
     qty: { type: Number, require: true },
     address: {
-        country: String,
-        city: String,
-        district: String,
-        street: String
+        type: String,
+        require: true
     },
     delivery_status: { type: String, default: "pending" },
-    subtotal: { type: Number, require: true },
     total: { type: Number, require: true },
-    payment_status: { type: String, require: true},
-
-    desc: String
+    payment_status: { type: String, require: true },
+    phone: { type: Number, require: true }
 })
 
 

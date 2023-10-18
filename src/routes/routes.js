@@ -7,7 +7,7 @@ const cartRoute = require("./cartRoute");
 const initRoute = (app) => {
   app.use("/products", productRoute);
   app.use("/users", userRoute);
-  app.use("/orders", orderRoute);
+  app.use("/order", orderRoute);
   app.use("/auth", authRoute);
   app.use("/cart", cartRoute);
 };
