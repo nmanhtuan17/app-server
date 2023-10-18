@@ -27,6 +27,14 @@ module.exports = {
             await newOrder.save()
             res.status(200).json('create order success')
         } catch (error) {
+            res.status(500).json('create orders error')
+        }
+    },
+    getAllOrders: async (req, res) => {
+        try {
+            const orders = await Order.find({})
+            res.status(200).json(orders)
+        } catch (error) {
             res.status(500).json('get all orders error')
         }
     }
