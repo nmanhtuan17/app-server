@@ -4,7 +4,7 @@ module.exports = {
     getUserOrder: async (req, res) => {
         const userId = req.params.id
         try {
-            const userOrder = await Order.find({userId})
+            const userOrder = await Order.find({ userId })
                 .populate({
                     path: 'productId',
                     select: "-desc -product_location"
@@ -17,7 +17,7 @@ module.exports = {
         }
     },
     createOrder: async (req, res) => {
-        const { productId, qty, address, payment_status, total, phone} = req.body
+        const { productId, qty, address, payment_status, total, phone } = req.body
         const userId = req.params.id
         try {
             const newOrder = new Order({
@@ -33,6 +33,11 @@ module.exports = {
     getAllOrders: async (req, res) => {
         try {
             const orders = await Order.find({})
+                .populate({
+                    path: 'productId',
+                    select: "-desc -product_location"
+                })
+                .exec()
             res.status(200).json(orders)
         } catch (error) {
             res.status(500).json('get all orders error')
