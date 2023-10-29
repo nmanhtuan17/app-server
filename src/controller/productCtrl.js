@@ -52,5 +52,15 @@ module.exports = {
         } catch (error) {
             res.status(501).json('delete product fail')
         }
+    },
+    editProduct: async (req, res) => {
+        const id = req.params.id
+        try {
+            const editproduct = req.body
+            await Product.findByIdAndUpdate(id, editproduct)
+            res.status(200).json('edit product success')
+        } catch (error) {
+            res.status(500).json('edit product fail')
+        }
     }
 }
